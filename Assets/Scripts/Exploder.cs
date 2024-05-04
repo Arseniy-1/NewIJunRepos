@@ -1,28 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Exploder : MonoBehaviour
 {
-    [SerializeField] private float _explosionRadius;
     [SerializeField] private float _maxExplosionForce;
-    [SerializeField] private GameObject _cubePrefab;
-    [SerializeField] private Cube _cube;
     [SerializeField] private int _maxCubesCount = 6;
     [SerializeField] private int _minCubesCount = 2;
+    [SerializeField] private GameObject _cubePrefab;
+    [SerializeField] private Cube _cube;
 
     private void OnEnable()
     {
-        _cube.OnCubeSeparated += ObjectCreator;
+        _cube.OnCubeSeparated += CreateObject;
     }
 
     private void OnDisable()
     {
-        _cube.OnCubeSeparated -= ObjectCreator;
+        _cube.OnCubeSeparated -= CreateObject;
     }
 
-
-    private void ObjectCreator()
+    private void CreateObject()
     {
         int CubeCount = Random.Range(_minCubesCount, _maxCubesCount + 1);
 

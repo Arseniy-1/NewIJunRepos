@@ -1,17 +1,26 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
     public event Action OnCubeSeparated;
 
+    private int _chanceDivider = 2;
+    private int _maxRandomNumber = 100;
+
     public float SeparationChance { get; private set; } = 100f;
 
     private void OnMouseUpAsButton()
     {
-        OnCubeSeparated?.Invoke();
-        SeparationChance /= 2;
+        var random = UnityEngine.Random.Range(0, _maxRandomNumber + 1);
+
+        if (SeparationChance > random)
+        {
+            OnCubeSeparated?.Invoke();
+            SeparationChance /= _chanceDivider;
+        }
+
+        Destroy(gameObject);
     }
+
 }

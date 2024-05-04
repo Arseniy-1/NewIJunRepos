@@ -34,8 +34,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.22999954, y: 6.94, z: -0.14999962}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -128,7 +128,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8d1bd8198d31a0c4c9c60a0647b72f86, type: 2}
   - {fileID: 2100000, guid: 582a56afa1208b94f8ef288250965fb5, type: 2}
   _meshRenderer: {fileID: 416525874975028948}
-  _cube: {fileID: 575343073645896578}
 --- !u!54 &6561013390793253947
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -155,7 +154,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &575343073645896578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,9 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db242e406588f914d95cd1ec575e03c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosionRadius: 3
-  _explosionForce: 700
-  _cubePrefab: {fileID: 5857629415290132486}
-  _cube: {fileID: 575343073645896578}
+  _maxExplosionForce: 25
   _maxCubesCount: 6
   _minCubesCount: 2
+  _cubePrefab: {fileID: 5857629415290132486}
+  _cube: {fileID: 575343073645896578}
