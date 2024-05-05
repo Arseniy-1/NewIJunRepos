@@ -1,21 +1,57 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Exploder : MonoBehaviour
 {
-    [SerializeField] private float _maxExplosionForce;
-    [SerializeField] private int _maxCubesCount = 6;
-    [SerializeField] private int _minCubesCount = 2;
+    [SerializeField] private float _explosionRadius;
+    [SerializeField] private float _explosionForce;
     [SerializeField] private GameObject _cubePrefab;
     [SerializeField] private Cube _cube;
+    [SerializeField] private int _maxCubesCount = 6;
+    [SerializeField] private int _minCubesCount = 2;
+
+    private float _explosionFactor;
 
     private void OnEnable()
     {
-        _cube.OnCubeSeparated += CreateObject;
+        _explosionFactor = 1 / transform.localScale.x;
+        _cube.OnCubeSeparated += CreateExplode;
     }
 
     private void OnDisable()
     {
-        _cube.OnCubeSeparated -= CreateObject;
+        _cube.OnCubeSeparated -= CreateExplode;
+    }
+
+    private void CreateExplode()
+    {
+        CreateObject();
+        Explode();
+    }
+
+    private void Explode()
+    {
+        foreach (Rigidbody explodableObject in GetExplodableObjects())
+        {
+            explodableObject.AddExplosionForce(_explosionForce * _explosionFactor, transform.position, _explosionRadius * _explosionFactor);
+        }
+    }
+
+    private List<Rigidbody> GetExplodableObjects()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, _explosionRadius * _explosionFactor);
+
+        List<Rigidbody> barrels = new();
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.attachedRigidbody != null)
+            {
+                barrels.Add(hit.attachedRigidbody);
+            }
+        }
+
+        return barrels;
     }
 
     private void CreateObject()
@@ -25,8 +61,6 @@ public class Exploder : MonoBehaviour
         for (int i = 0; i < CubeCount; i++)
         {
             GameObject cube = Instantiate(_cubePrefab, transform.position, Quaternion.identity);
-            cube.GetComponent<Scaler>().RescaleWithChance();
-            cube.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, _maxExplosionForce), Random.Range(0, _maxExplosionForce), Random.Range(0, _maxExplosionForce)), ForceMode.Impulse);
         }
     }
 }

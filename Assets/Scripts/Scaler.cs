@@ -8,10 +8,10 @@ public class Scaler : MonoBehaviour
 
     private void OnEnable()
     {
-        RescaleWithChance();
+        RescaleObject();
     }
 
-    public void RescaleWithChance()
+    public void RescaleObject()
     {
         transform.localScale /= _scaleDivider;
     }

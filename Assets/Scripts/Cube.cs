@@ -17,10 +17,9 @@ public class Cube : MonoBehaviour
         if (SeparationChance > random)
         {
             OnCubeSeparated?.Invoke();
-            SeparationChance /= _chanceDivider;
+            SeparationChance = SeparationChance / _chanceDivider;
         }
 
         Destroy(gameObject);
     }
-
 }
