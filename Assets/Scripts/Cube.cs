@@ -1,25 +1,45 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    public event Action OnCubeSeparated;
+    [SerializeField]private ColorChanger _colorChanger;
+    private CubeReturner _cubeReturner;
+    private bool _isTouched;
+    private int _maxDelay = 5;
+    private int _minDelay = 2;
+    private System.Random _random = new System.Random();
 
-    private int _chanceDivider = 2;
-    private int _maxRandomNumber = 100;
-
-    public float SeparationChance { get; private set; } = 100f;
-
-    private void OnMouseUpAsButton()
+    public void Initialize(CubeReturner cubeReturner)
     {
-        var random = UnityEngine.Random.Range(0, _maxRandomNumber + 1);
+        _cubeReturner = cubeReturner;
+    }
 
-        if (SeparationChance > random)
+    private void OnEnable()
+    {
+        _isTouched = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Platform")
         {
-            OnCubeSeparated?.Invoke();
-            SeparationChance = SeparationChance / _chanceDivider;
-        }
+            if (_isTouched)
+                return;
 
-        Destroy(gameObject);
+            Debug.Log("Касание с платформой");
+            _colorChanger.ChangeColor();
+            _isTouched = true;
+            StartCoroutine(DestroingCubeWithDelay());
+        }
+    }
+
+    private IEnumerator DestroingCubeWithDelay()
+    {
+        yield return new WaitForSeconds(_random.Next(_minDelay, _maxDelay));
+        _cubeReturner.ReturnCube(this);
     }
 }
