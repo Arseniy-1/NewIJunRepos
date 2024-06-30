@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private CubePool _cubePool;
     [SerializeField] private List<Vector3> _positions;
     [SerializeField] private float _spawnDelay = 1.0f;
-
-    private System.Random _random = new System.Random();
 
     private void Start()
     {
@@ -20,7 +19,7 @@ public class Spawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(_spawnDelay);
-            Vector3 randomPosition = _positions[_random.Next(_positions.Count)];
+            Vector3 randomPosition = _positions[Random.Range(0, _positions.Count)];
 
             if (_cubePool.TryGetCube(out Cube cube))
                 cube.transform.position = randomPosition;

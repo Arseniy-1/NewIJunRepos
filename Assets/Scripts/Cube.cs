@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Cube : MonoBehaviour
 {
@@ -11,7 +9,6 @@ public class Cube : MonoBehaviour
     private bool _isTouched;
     private int _maxDelay = 5;
     private int _minDelay = 2;
-    private System.Random _random = new System.Random();
 
     public void Initialize(CubeReturner cubeReturner)
     {
@@ -25,12 +22,11 @@ public class Cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.TryGetComponent(out Platform platform))
         {
             if (_isTouched)
                 return;
 
-            Debug.Log("Касание с платформой");
             _colorChanger.ChangeColor();
             _isTouched = true;
             StartCoroutine(DestroingCubeWithDelay());
@@ -39,7 +35,7 @@ public class Cube : MonoBehaviour
 
     private IEnumerator DestroingCubeWithDelay()
     {
-        yield return new WaitForSeconds(_random.Next(_minDelay, _maxDelay));
+        yield return new WaitForSeconds(Random.Range(_minDelay, _maxDelay));
         _cubeReturner.ReturnCube(this);
     }
 }
