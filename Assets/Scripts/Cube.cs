@@ -4,13 +4,13 @@ using Random = UnityEngine.Random;
 
 public class Cube : MonoBehaviour
 {
-    [SerializeField]private ColorChanger _colorChanger;
-    private CubeReturner _cubeReturner;
+    [SerializeField] private Painter _painter;
+    private ICubeReturner _cubeReturner;
     private bool _isTouched;
     private int _maxDelay = 5;
     private int _minDelay = 2;
 
-    public void Initialize(CubeReturner cubeReturner)
+    public void Initialize(ICubeReturner cubeReturner)
     {
         _cubeReturner = cubeReturner;
     }
@@ -18,6 +18,7 @@ public class Cube : MonoBehaviour
     private void OnEnable()
     {
         _isTouched = false;
+        _painter.ChangeToDefaultColor();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -27,15 +28,15 @@ public class Cube : MonoBehaviour
             if (_isTouched)
                 return;
 
-            _colorChanger.ChangeColor();
+            _painter.ChangeColor();
             _isTouched = true;
-            StartCoroutine(DestroingCubeWithDelay());
+            StartCoroutine(DestroingWithDelay());
         }
     }
 
-    private IEnumerator DestroingCubeWithDelay()
+    private IEnumerator DestroingWithDelay()
     {
         yield return new WaitForSeconds(Random.Range(_minDelay, _maxDelay));
-        _cubeReturner.ReturnCube(this);
+        _cubeReturner.Return(this);
     }
 }

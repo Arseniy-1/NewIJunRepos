@@ -16,13 +16,17 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawningCubes()
     {
+        var delay = new WaitForSeconds(_spawnDelay);
+
         while (true)
         {
-            yield return new WaitForSeconds(_spawnDelay);
+            yield return delay;
             Vector3 randomPosition = _positions[Random.Range(0, _positions.Count)];
 
-            if (_cubePool.TryGetCube(out Cube cube))
-                cube.transform.position = randomPosition;
+            Cube cube = _cubePool.Get();
+            cube.transform.position = randomPosition;
+            //if (_cubePool.TryGet(out Cube cube))
+            //    cube.transform.position = randomPosition;
         }
     }
 }

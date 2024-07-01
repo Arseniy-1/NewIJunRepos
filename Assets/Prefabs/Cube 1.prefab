@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 763616549977561785}
   - component: {fileID: 3465571328005553192}
   - component: {fileID: -1681764545340238576}
+  - component: {fileID: 7069205863080378026}
   - component: {fileID: 5114368480007079625}
-  - component: {fileID: 7959724879963429098}
   m_Layer: 0
   m_Name: Cube 1
   m_TagString: Untagged
@@ -120,7 +120,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09cb63febb423bd4db8780bde225fddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colorChanger: {fileID: 7959724879963429098}
+  _painter: {fileID: 7069205863080378026}
+--- !u!114 &7069205863080378026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6359707989196232093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0629b6ee7878d409993f440a84796f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: 11b31c91be281ce46a08ade62c9468c4, type: 2}
+  - {fileID: 2100000, guid: 582a56afa1208b94f8ef288250965fb5, type: 2}
+  - {fileID: 2100000, guid: 8915cc6047242a748b584e31c8eeac88, type: 2}
+  - {fileID: 2100000, guid: 8d1bd8198d31a0c4c9c60a0647b72f86, type: 2}
+  _defaultMaterial: {fileID: 2100000, guid: 582a56afa1208b94f8ef288250965fb5, type: 2}
+  _meshRenderer: {fileID: 763616549977561785}
 --- !u!54 &5114368480007079625
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -148,20 +167,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7959724879963429098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6359707989196232093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f0629b6ee7878d409993f440a84796f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _materials:
-  - {fileID: 2100000, guid: 11b31c91be281ce46a08ade62c9468c4, type: 2}
-  - {fileID: 2100000, guid: 582a56afa1208b94f8ef288250965fb5, type: 2}
-  - {fileID: 2100000, guid: 8915cc6047242a748b584e31c8eeac88, type: 2}
-  - {fileID: 2100000, guid: 8d1bd8198d31a0c4c9c60a0647b72f86, type: 2}

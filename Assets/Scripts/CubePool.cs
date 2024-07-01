@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubePool : MonoBehaviour, CubeReturner
+public class CubePool : MonoBehaviour, ICubeReturner
 {
     [SerializeField] private Cube _cubePrefab;
     [SerializeField] private int _poolCapacity;
@@ -19,23 +19,27 @@ public class CubePool : MonoBehaviour, CubeReturner
         }
     }
 
-    public bool TryGetCube(out Cube cube)
+    public Cube Get()
     {
-        if( _cubes.Count == 0)
-        {
-            cube = null;
-            return false;
-        }
+        if (_cubes.Count == 0)
+            ExpandPool();
 
-        cube = _cubes.Dequeue();
-        cube.gameObject.SetActive(true);
+        Cube newCube = _cubes.Dequeue();
+        newCube.gameObject.SetActive(true);
 
-        return true;
+        return newCube;
     }
 
-    public void ReturnCube(Cube cube)
+    public void Return(Cube cube)
     {
         cube.gameObject.SetActive(false);
+        _cubes.Enqueue(cube);
+    }
+
+    private void ExpandPool()
+    {
+        Cube cube = Instantiate(_cubePrefab);
+        cube.Initialize(this);
         _cubes.Enqueue(cube);
     }
 }
